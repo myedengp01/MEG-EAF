@@ -48,7 +48,7 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
 .office-overlay{position:absolute;inset:0;background:rgba(240,240,240,.85);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;cursor:not-allowed}
 .office-overlay .lock-icon{font-size:32px;margin-bottom:8px}
 .office-overlay p{font-size:12px;color:#555;text-align:center;font-weight:600}
-.action-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding-top:14px;border-top:2px solid #ddd;align-items:center}
+.action-bar{position:sticky;top:0;z-index:1000;background:#fff;display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;border-bottom:2px solid #ddd;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 .btn-action{padding:8px 14px;border-radius:4px;border:none;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
 .btn-drive{background:#1a7340;color:#fff}
 .btn-load{background:#1565c0;color:#fff}
@@ -107,6 +107,18 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
 </style>
 </head>
 <body>
+
+<!-- ACTION BAR — sits OUTSIDE the form entirely, sticky at top, never affects form layout -->
+<div class="action-bar">
+  <button class="btn-action btn-draft" id="btnSaveDraft" onclick="saveDraftServer()">&#128190; Save Draft</button>
+  <button class="btn-action btn-load" id="btnResumeDraft" onclick="openResumeModal()">&#128194; Resume Draft</button>
+  <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none" onchange="handleJsonFileLoad(event)">
+  <button class="btn-action" onclick="document.getElementById('jsonFileInput').click()" style="background:#546e7a;color:#fff">&#128194; Load from JSON</button>
+  <button class="btn-action" onclick="downloadJsonBackup()" style="background:#546e7a;color:#fff">&#128190; Download JSON</button>
+  <button class="btn-action" id="btnSubmit" onclick="submitApplication()" style="background:#1b5e20;color:#fff">&#128228; Submit Application</button>
+  <span class="autosave-status" id="autosaveStatus" style="margin-left:auto">Auto-save: waiting...</span>
+</div>
+
 <div class="form-wrap" id="appForm">
 
 <!-- HEADER -->
@@ -415,17 +427,6 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
   </div>
 </div>
 
-<!-- ACTION BAR -->
-<div class="action-bar">
-  <button class="btn-action btn-draft" id="btnSaveDraft" onclick="saveDraftServer()">&#128190; Save Draft</button>
-  <button class="btn-action btn-load" id="btnResumeDraft" onclick="openResumeModal()">&#128194; Resume Draft</button>
-  <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none" onchange="handleJsonFileLoad(event)">
-  <button class="btn-action" onclick="document.getElementById('jsonFileInput').click()" style="background:#546e7a;color:#fff">&#128194; Load from JSON</button>
-  <button class="btn-action" onclick="downloadJsonBackup()" style="background:#546e7a;color:#fff">&#128190; Download JSON</button>
-  <button class="btn-action" id="btnSubmit" onclick="submitApplication()" style="background:#1b5e20;color:#fff">&#128228; Submit Application</button>
-  <span class="autosave-status" id="autosaveStatus" style="margin-left:auto">Auto-save: waiting...</span>
-</div>
-
 </div><!-- /form-wrap -->
 
 <!-- CAMERA MODAL -->
@@ -472,7 +473,7 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
 <script>
 
 // ── VERSION (update only via UVN command) ──────────────────────────────────
-var FORM_VERSION = 'MEG-EAF-Applicant v2026.07.30-23:30';
+var FORM_VERSION = 'MEG-EAF-Applicant v2026.07.31-00:30';
 
 
 // ── CONFIG (Supabase backend) ────────────────────────────────────────────────
