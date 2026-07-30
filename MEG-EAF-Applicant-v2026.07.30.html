@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>MyEden Employment Application</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:13px;color:#222;background:#f5f5f5}
+.form-wrap{max-width:900px;margin:0 auto;background:#fff;padding:24px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;border-bottom:2px solid #222;padding-bottom:12px}
+.logo-area h1{font-size:22px;font-weight:900;letter-spacing:-0.5px}.logo-area h1 span{color:#2e7d32}
+.photo-box{width:110px;height:130px;border:1.5px solid #888;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;background:#fafafa;flex-shrink:0;overflow:hidden}
+.photo-box .ph-label{font-size:11px;color:#888;text-align:center;pointer-events:none;z-index:1}
+.photo-box img.preview{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:2}
+#idFrontBox img.preview,#idBackBox img.preview{object-fit:contain;object-position:center center;background:#F1F3F4}
+.photo-btns{display:flex;gap:4px;margin-top:4px}
+.photo-btns button{font-size:10px;padding:2px 6px;border:1px solid #aaa;background:#fff;cursor:pointer;border-radius:3px}
+.section-title{font-size:12px;font-weight:700;background:#ddd;padding:4px 8px;margin:14px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+.form-row{display:flex;gap:12px;margin-bottom:8px;align-items:center;flex-wrap:wrap}
+.form-group{display:flex;flex-direction:column;gap:2px;flex:1;min-width:140px}
+.form-group label{font-size:11px;color:#555;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{border:none;border-bottom:1px solid #555;padding:3px 0;font-size:13px;background:transparent;outline:none;width:100%}
+.form-group textarea{border:1px solid #aaa;padding:6px;resize:vertical;border-radius:3px;min-height:60px}
+.radio-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.radio-row>label{font-size:13px;font-weight:600;min-width:110px}
+.radio-group{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.radio-group label,.cb-group label{display:flex;align-items:center;gap:4px;font-size:13px;cursor:pointer;font-weight:400}
+.cb-group{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:12px}
+th{background:#eee;border:1px solid #bbb;padding:5px 8px;text-align:left;font-size:11px}
+td{border:1px solid #bbb;padding:3px}
+td input,td select{border:none;width:100%;font-size:12px;background:transparent;outline:none;padding:2px}
+.add-row-btn{font-size:11px;padding:3px 10px;margin-top:4px;border:1px dashed #888;background:#fafafa;cursor:pointer;border-radius:3px}
+.yn-group{display:flex;gap:8px;align-items:center}
+.yn-group label{display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer}
+.declaration-box{border:1px solid #bbb;padding:10px;font-size:11px;line-height:1.7;background:#fafafa;margin-bottom:12px;max-height:150px;overflow-y:auto}
+.sig-wrap{max-width:50%;min-width:220px}
+.sig-canvas{border:1px solid #aaa;background:#fff;display:block;width:100%;height:90px;touch-action:none;cursor:crosshair}
+.sig-btns{display:flex;gap:8px;margin-top:4px}
+.sig-btns button{font-size:11px;padding:3px 10px;border:1px solid #aaa;background:#fff;cursor:pointer;border-radius:3px}
+.sig-btns{display:flex;gap:8px;margin-top:4px}
+.sig-btns button{font-size:11px;padding:3px 10px;border:1px solid #aaa;background:#fff;cursor:pointer;border-radius:3px}
+.office-box{background:#f9f9f9;border:1px solid #ccc;padding:12px;margin-top:10px;border-radius:4px;position:relative}
+.office-overlay{position:absolute;inset:0;background:rgba(240,240,240,.85);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;cursor:not-allowed}
+.office-overlay .lock-icon{font-size:32px;margin-bottom:8px}
+.office-overlay p{font-size:12px;color:#555;text-align:center;font-weight:600}
+.action-bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px;padding-top:14px;border-top:2px solid #ddd;align-items:center}
+.btn-action{padding:8px 14px;border-radius:4px;border:none;cursor:pointer;font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
+.btn-drive{background:#1a7340;color:#fff}
+.btn-load{background:#1565c0;color:#fff}
+.btn-print{background:#555;color:#fff}
+.btn-draft{background:#e65100;color:#fff}
+.btn-admin{background:#6a1b9a;color:#fff}
+.btn-pdf{background:#37474f;color:#fff}
+.btn-action:hover{opacity:.88}
+.btn-action:disabled{opacity:.4;cursor:not-allowed}
+.autosave-status{font-size:11px;color:#888}
+.admin-badge{font-size:11px;background:#1b5e20;color:#fff;padding:3px 10px;border-radius:12px;font-weight:600;display:none;align-items:center;gap:5px}
+.page-break{border-top:2px dashed #ccc;margin:20px 0;padding-top:10px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center}
+.modal-bg.active{display:flex}
+.modal-inner{background:#fff;border-radius:8px;padding:24px;width:400px;max-width:95vw;box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.modal-inner h3{font-size:15px;margin-bottom:14px;border-bottom:1px solid #eee;padding-bottom:8px}
+.modal-inner label{font-size:12px;color:#555;font-weight:600;display:block;margin-bottom:2px}
+.modal-inner input,.modal-inner select{width:100%;border:1px solid #ccc;padding:7px;border-radius:4px;font-size:13px;margin-bottom:12px;display:block}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.modal-btns button{padding:7px 16px;border-radius:4px;border:none;cursor:pointer;font-size:13px}
+.btn-cancel{background:#eee}
+.btn-confirm{background:#1a7340;color:#fff}
+.btn-confirm-blue{background:#1565c0;color:#fff}
+.btn-confirm-purple{background:#6a1b9a;color:#fff}
+.err-box{display:none;background:#ffebee;border:1px solid #ef9a9a;border-radius:4px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#c62828;line-height:1.7}
+.field-err{border-bottom:2px solid #e53935!important;background:rgba(229,57,53,.06)!important}
+.field-err-cb{outline:2px solid #e53935;border-radius:3px}
+.time-range{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.time-range input[type=time]{border:none;border-bottom:1px solid #555;padding:3px;font-size:13px;background:transparent;outline:none}
+.dob-auto{font-size:10px;color:#1a7340;margin-top:2px;font-style:italic}
+.letter-doc{font-family:Arial,sans-serif;color:#111}
+.letter-doc h3{font-size:13px;text-align:center;font-weight:700;margin:14px 0 8px;text-transform:uppercase}
+.letter-doc .l-clause-title{font-size:12px;font-weight:700;text-decoration:underline;margin:14px 0 6px}
+.letter-doc p{margin-bottom:8px;text-align:justify}
+.letter-doc ul,.letter-doc ol{margin:0 0 8px 22px}
+.letter-doc li{margin-bottom:6px;text-align:justify}
+.letter-doc table{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:11px}
+.letter-doc th,.letter-doc td{border:1px solid #999;padding:4px 8px}
+.letter-page{margin-bottom:18px}
+.letter-doc table,.letter-doc ul,.letter-doc ol{break-inside:avoid;page-break-inside:avoid}
+.letter-page.force-break{page-break-before:always;break-before:page}
+.letter-sig-line{margin:30px 0 4px;border-bottom:1px solid #222;width:260px}
+.letter-private{text-align:center;font-weight:700;font-style:italic;letter-spacing:1px;margin:10px 0}
+.letter-head{width:100%;margin-bottom:16px;border-bottom:2px solid #1a7340;padding-bottom:8px}
+.letter-head img{width:100%;max-width:100%;display:block}
+.letter-tight p{margin-bottom:1px;line-height:1.3}
+#appointmentLetterSection{max-height:640px;overflow-y:auto}
+@media print{
+  .action-bar,.photo-btns,.add-row-btn,.sig-btns,.modal-bg,.office-overlay,.admin-badge,#letterLockNote,.admin-only-inline{display:none!important}
+  body{background:#fff}
+  .form-wrap{box-shadow:none;padding:0}
+  .declaration-box{max-height:none!important;overflow:visible!important}
+  body.print-letter-only .form-wrap>*{display:none!important}
+  body.print-letter-only #appointmentLetterSection{display:block!important;max-height:none!important;overflow:visible!important;border:none!important;padding:0!important}
+}
+</style>
+</head>
+<body>
+<div class="form-wrap" id="appForm">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-area">
+    <div style="display:flex;align-items:center;gap:10px">
+      <img id="companyLogo" style="height:70px;width:auto;object-fit:contain" alt="MyEden Logo">
+      <div>
+        <h1>My<span>Eden</span> Group Sdn. Bhd.</h1>
+        <p style="font-size:10px;color:#555;margin-top:2px">No 14A, Jalan Indah 15/1, Taman Bukit Indah, 81200, Johor Bahru, Johor<br>
+        Tel: +6016-219 1170 | Email: myeden.group@gmail.com<br>
+        Company Registration: 201901034872 (1344202-X)</p>
+        <p style="margin-top:4px;font-size:12px;font-style:italic;color:#2e7d32">play. learn. grow.</p>
+      </div>
+    </div>
+    <h2 style="margin-top:10px;font-size:18px">Employment Application</h2>
+    <p style="font-size:11px;color:#555">We are an equal opportunity employer</p>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:4px">
+    <div class="photo-box" id="photoBox">
+      <span class="ph-label">Passport<br>Size<br>Photo<br><small>(click to upload)</small></span>
+    </div>
+    <div class="photo-btns">
+      <button type="button" id="btnCamera">Camera</button>
+      <button type="button" id="btnGallery">Gallery</button>
+      <button type="button" onclick="removePhoto()">Clear</button>
+    </div>
+    <input type="file" id="photoInput" accept="image/*" style="display:none">
+  </div>
+</div>
+
+<!-- ERROR BOX -->
+<div class="err-box" id="errBox"></div>
+<input type="text" id="website" name="website" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;height:1px;width:1px;opacity:0;pointer-events:none">
+
+<!-- REF + DATE -->
+<div class="form-row">
+  <div class="form-group" style="flex:2">
+    <label>Form Reference</label>
+    <span id="formRef" style="font-size:12px;font-weight:700;color:#333;padding:3px 0;display:block"></span>
+  </div>
+  <div class="form-group" style="flex:1">
+    <label>Date of Application <span style="color:red">*</span></label>
+    <input type="date" id="appDate" required>
+  </div>
+</div>
+
+<!-- PERSONAL INFORMATION -->
+<div class="section-title">Personal Information</div>
+<div class="form-row">
+  <div class="form-group"><label>Full Name (Chinese)</label><input type="text" id="nameChinese" placeholder="中文姓名"></div>
+  <div class="form-group"><label>Full Name (English) <span style="color:red">*</span></label><input type="text" id="nameEnglish" placeholder="As per IC/Passport"></div>
+</div>
+<div class="form-row">
+  <div class="form-group" style="flex:2">
+    <label>I/C No <span style="color:red">*</span> <span style="font-weight:400;color:#888">(or Passport)</span></label>
+    <div style="display:flex;gap:4px;align-items:center">
+      <input type="text" id="ic1" maxlength="6" placeholder="YYMMDD" style="width:80px" oninput="this.value=this.value.replace(/\D/g,'');extractDOB()">
+      <span>-</span>
+      <input type="text" id="ic2" maxlength="2" placeholder="XX" style="width:40px" oninput="this.value=this.value.replace(/\D/g,'')">
+      <span>-</span>
+      <input type="text" id="ic3" maxlength="4" placeholder="XXXX" style="width:55px" oninput="this.value=this.value.replace(/\D/g,'')">
+    </div>
+    <span class="dob-auto" id="dobHint"></span>
+  </div>
+  <div class="form-group"><label>Passport No</label><input type="text" id="passport" oninput="checkPassport()"></div>
+</div>
+<div class="radio-row">
+  <label>Gender <span style="color:red">*</span></label>
+  <div class="radio-group" id="genderGroup">
+    <label><input type="radio" name="gender" value="Male"> Male</label>
+    <label><input type="radio" name="gender" value="Female"> Female</label>
+  </div>
+  <label style="margin-left:20px">Date of Birth <span style="color:red" id="dobStar"></span></label>
+  <div style="display:flex;flex-direction:column">
+    <input type="date" id="dob" style="border:none;border-bottom:1px solid #555;padding:3px;font-size:13px" oninput="updateAge()">
+    <span class="dob-auto" id="dobSource"></span>
+  </div>
+  <label style="margin-left:14px">Age</label>
+  <input type="text" id="dobAge" readonly placeholder="—" style="width:46px;border:none;border-bottom:1px solid #aaa;padding:3px;font-size:13px;background:transparent;color:#1a7340;font-weight:700;text-align:center">
+</div>
+<div class="radio-row">
+  <label>Marital Status <span style="color:red">*</span></label>
+  <div class="radio-group" id="maritalGroup">
+    <label><input type="radio" name="marital" value="Single"> Single</label>
+    <label><input type="radio" name="marital" value="Married"> Married</label>
+    <label><input type="radio" name="marital" value="Others"> Others: <input type="text" id="maritalOther" style="width:80px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+  <label style="margin-left:20px">No of Children</label>
+  <input type="number" id="children" min="0" style="width:60px;border:none;border-bottom:1px solid #555;padding:3px;font-size:13px">
+</div>
+<div class="radio-row">
+  <label>Race <span style="color:red">*</span></label>
+  <div class="radio-group" id="raceGroup">
+    <label><input type="radio" name="race" value="Chinese"> Chinese</label>
+    <label><input type="radio" name="race" value="Malay"> Malay</label>
+    <label><input type="radio" name="race" value="Indian"> Indian</label>
+    <label><input type="radio" name="race" value="Others"> Others: <input type="text" id="raceOther" style="width:80px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+<div class="radio-row">
+  <label>Religion <span style="color:red">*</span></label>
+  <div class="radio-group" id="religionGroup">
+    <label><input type="radio" name="religion" value="Christian"> Christian</label>
+    <label><input type="radio" name="religion" value="Buddhist"> Buddhist</label>
+    <label><input type="radio" name="religion" value="Hindu"> Hindu</label>
+    <label><input type="radio" name="religion" value="Muslim"> Muslim</label>
+    <label><input type="radio" name="religion" value="Others"> Others: <input type="text" id="religionOther" style="width:80px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+<div class="section-title" style="background:#f0f0f0;font-size:11px;text-transform:none;font-weight:600;margin-bottom:6px">Residential Address <span style="color:red">*</span></div>
+<div class="form-row">
+  <div class="form-group"><label>Address Line 1 <span style="color:red">*</span></label><input type="text" id="addr1" placeholder="e.g. No. 12, Jalan Contoh"></div>
+  <div class="form-group"><label>Address Line 2</label><input type="text" id="addr2" placeholder="e.g. Taman Contoh"></div>
+</div>
+<div class="form-row">
+  <div class="form-group"><label>Address Line 3</label><input type="text" id="addr3" placeholder="e.g. Section/Phase (if any)"></div>
+  <div class="form-group"><label>Postcode &amp; Town <span style="color:red">*</span></label><input type="text" id="postcodeTown" placeholder="e.g. 81200 Johor Bahru"></div>
+  <div class="form-group"><label>State <span style="color:red">*</span></label><input type="text" id="addrState" placeholder="e.g. Johor"></div>
+</div>
+<div class="form-row">
+  <div class="form-group"><label>Contact No <span style="color:red">*</span></label><input type="tel" id="contact"></div>
+  <div class="form-group"><label>E-mail <span style="color:red">*</span></label><input type="email" id="email"></div>
+</div>
+
+<!-- FAMILY INFORMATION -->
+<div class="section-title">Family Information</div>
+<table><thead><tr><th style="width:40px">No</th><th>Name <span style="font-weight:400;color:#888;font-size:10px">(if none, type N/A)</span></th><th style="width:50px">Age</th><th>Status (Study/Work)</th><th>Relationship</th></tr></thead>
+<tbody id="familyBody"></tbody></table>
+<button class="add-row-btn" onclick="addFamilyRow()">+ Add family member</button>
+
+<!-- ACADEMIC ACHIEVEMENTS -->
+<div class="section-title">Academic Achievements</div>
+<table><thead><tr><th style="width:40px">No</th><th>Academic Level <span style="font-weight:400;color:#888;font-size:10px">(if none, type N/A)</span></th><th>School / College / University</th><th>Location</th><th style="width:60px">From</th><th style="width:60px">To</th><th style="width:70px">Graduated</th></tr></thead>
+<tbody id="academicBody"></tbody></table>
+<button class="add-row-btn" onclick="addAcademicRow()">+ Add qualification</button>
+
+<!-- JOB REQUIREMENTS -->
+<div class="section-title">Job Requirements</div>
+<div class="radio-row">
+  <label>Intended Post <span style="color:red">*</span> <span style="font-weight:400;color:#888">(tick any that apply)</span></label>
+  <div class="cb-group" id="postGroup">
+    <div style="width:100%;font-weight:700;color:#1b5e20;margin:2px 0 4px">A. Operations</div>
+    <label><input type="checkbox" name="post" value="Childcare Mentor"> Childcare Mentor</label>
+    <label><input type="checkbox" name="post" value="Kindergarten Teacher"> Kindergarten Teacher</label>
+    <label><input type="checkbox" name="post" value="Infant Childcare"> Infant Childcare</label>
+    <label><input type="checkbox" name="post" value="Playgroup Mentor"> Playgroup Mentor</label>
+    <label><input type="checkbox" name="post" value="Others (Operations)"> Others: <input type="text" id="postOtherOps" style="width:110px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+    <div style="width:100%;font-weight:700;color:#1565c0;margin:8px 0 4px">B. Office</div>
+    <label><input type="checkbox" name="post" value="Management"> Management</label>
+    <label><input type="checkbox" name="post" value="HR"> HR</label>
+    <label><input type="checkbox" name="post" value="Admin"> Admin</label>
+    <label><input type="checkbox" name="post" value="Account"> Account</label>
+    <label><input type="checkbox" name="post" value="Account & Payroll"> Account &amp; Payroll</label>
+    <label><input type="checkbox" name="post" value="Content Creator"> Content Creator</label>
+    <label><input type="checkbox" name="post" value="Marketing"> Marketing</label>
+    <label><input type="checkbox" name="post" value="Others (Office)"> Others: <input type="text" id="postOther" style="width:110px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+<div class="radio-row">
+  <label>Desired Working Hour <span style="color:red">*</span></label>
+  <div class="cb-group" id="workhourGroup">
+    <label><input type="checkbox" name="workhour" value="Full Time"> Full Time</label>
+    <label><input type="checkbox" name="workhour" value="Part Time"> Part Time</label>
+    <label><input type="checkbox" name="workhour" value="Internship"> Internship</label>
+    <label><input type="checkbox" name="workhour" value="Temporary"> Temporary</label>
+    <label><input type="checkbox" name="workhour" value="Others"> Others: <input type="text" id="workHourOther" style="width:80px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+<div class="form-row">
+  <div class="form-group">
+    <label>Working Hours <span style="color:red">*</span></label>
+    <div class="time-range">
+      <span>From:</span><input type="time" id="workFrom">
+      <span>To:</span><input type="time" id="workTo">
+    </div>
+  </div>
+  <div class="form-group"><label>Date Available to Start</label><input type="date" id="startDate"></div>
+</div>
+<div class="form-row">
+  <div class="form-group"><label>Expected Salary (RM) <span style="color:red">*</span></label><input type="number" id="salary" placeholder="0.00"></div>
+</div>
+<div class="radio-row">
+  <label>Spoken Language <span style="color:red">*</span></label>
+  <div class="cb-group" id="spokenGroup">
+    <label><input type="checkbox" name="spoken" value="Chinese"> Chinese</label>
+    <label><input type="checkbox" name="spoken" value="English"> English</label>
+    <label><input type="checkbox" name="spoken" value="Malay"> Malay</label>
+    <label>Others: <input type="text" id="spokenOther" style="width:100px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+<div class="radio-row">
+  <label>Written Language <span style="color:red">*</span></label>
+  <div class="cb-group" id="writtenGroup">
+    <label><input type="checkbox" name="written" value="Chinese"> Chinese</label>
+    <label><input type="checkbox" name="written" value="English"> English</label>
+    <label><input type="checkbox" name="written" value="Malay"> Malay</label>
+    <label>Others: <input type="text" id="writtenOther" style="width:100px;border:none;border-bottom:1px solid #555;margin-left:4px"></label>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page-break"></div>
+<div class="section-title">Special Skills</div>
+<div class="form-group" style="margin-bottom:10px">
+  <label>Do you have any special skill?</label>
+  <textarea id="specialSkills" placeholder="List your special skills..."></textarea>
+</div>
+
+<div class="section-title">Work Experience</div>
+<div id="workExpContainer"></div>
+<button class="add-row-btn" onclick="addWorkExp()">+ Add more experience</button>
+
+<div class="section-title" style="margin-top:14px">Other Details <span style="color:red;font-size:11px">(all mandatory)</span></div>
+<table style="margin-bottom:10px">
+  <tbody>
+    <tr><td style="padding:6px 8px">1. Are you an undischarged bankrupt?</td><td style="width:140px;text-align:center"><div class="yn-group" style="justify-content:center" id="q1Group"><label><input type="radio" name="q1" value="Yes"> Yes</label><label><input type="radio" name="q1" value="No"> No</label></div></td></tr>
+    <tr><td style="padding:6px 8px">2. Have you ever been convicted of any criminal offence?</td><td style="text-align:center"><div class="yn-group" style="justify-content:center" id="q2Group"><label><input type="radio" name="q2" value="Yes"> Yes</label><label><input type="radio" name="q2" value="No"> No</label></div></td></tr>
+    <tr><td style="padding:6px 8px">3. Have you suffered or are suffering from any serious illness?</td><td style="text-align:center"><div class="yn-group" style="justify-content:center" id="q3Group"><label><input type="radio" name="q3" value="Yes"> Yes</label><label><input type="radio" name="q3" value="No"> No</label></div></td></tr>
+    <tr><td style="padding:6px 8px">4. Do you suffer from any physical handicap?</td><td style="text-align:center"><div class="yn-group" style="justify-content:center" id="q4Group"><label><input type="radio" name="q4" value="Yes"> Yes</label><label><input type="radio" name="q4" value="No"> No</label></div></td></tr>
+  </tbody>
+</table>
+<div class="form-group" style="margin-bottom:10px">
+  <label>If you ticked 'Yes' for any of the above, please provide details:</label>
+  <textarea id="yesDetails" placeholder="Provide details here..."></textarea>
+</div>
+<div class="form-group" style="margin-bottom:10px">
+  <label>Do you have any family/relatives/friends currently employed by MyEden Group Sdn Bhd? If yes:</label>
+  <div class="form-row" style="margin-top:6px">
+    <div class="form-group"><label>Name</label><input type="text" id="relName"></div>
+    <div class="form-group"><label>Relationship</label><input type="text" id="relRelationship"></div>
+    <div class="form-group"><label>Department</label><input type="text" id="relDept"></div>
+    <div class="form-group"><label>Job Title</label><input type="text" id="relJobTitle"></div>
+  </div>
+</div>
+<div class="radio-row">
+  <label>How did you know about this vacancy?</label>
+  <div class="cb-group">
+    <label><input type="checkbox" name="source" value="Advertisement"> Advertisement</label>
+    <label><input type="checkbox" name="source" value="Friends/Relatives"> Friends/Relatives</label>
+    <label><input type="checkbox" name="source" value="Employment Agency"> Employment Agency</label>
+    <label><input type="checkbox" name="source" value="Other Sources"> Other Sources</label>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page-break"></div>
+<div class="section-title">Declaration</div>
+<div class="declaration-box">
+  <p style="font-weight:700;margin-bottom:8px">PLEASE READ CAREFULLY</p>
+  <p>I hereby declare that all information given by me to the foregoing questions and all statements made by me in this application form are correct and to the best of my knowledge and belief. If there is any false declaration made in this application form, Myeden Group Sdn Bhd ("the Company") has the absolute right to terminate my employment immediately.</p><br>
+  <p>I hereby consent and authorise the Company to make reference and contact all my past employers on my job performance. However, reference to my current employer may only be made with my prior permission so long as I am still in their employment.</p><br>
+  <p>In accordance with Personal Data Protection Act 2010, I hereby consent and authorise the Company to collect, use and process my personal data for the purpose in relation to my job application and employment with the Company and use my information given herein to contact me directly.</p><br>
+  <p>Additionally, the information provided by you to the Company may become part of our resume database. In this instance, the use of such information by the Company will be subject to the Company's privacy policy. By submitting this employment application form to us, I hereby agree and consent for the Company to collect, use and process my personal data in the manner as identified above.</p>
+</div>
+<div style="margin-bottom:14px;padding:10px;border:1.5px solid #bbb;border-radius:4px;background:#fffde7" id="declBox">
+  <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:13px">
+    <input type="checkbox" id="declAgree" style="margin-top:2px;width:16px;height:16px;flex-shrink:0;accent-color:#1a7340">
+    <span>I have read and fully understood the above declaration. I hereby confirm that all information provided is true and correct, and I consent to the collection and use of my personal data as stated above. <span style="color:red;font-weight:700">*</span></span>
+  </label>
+  <div id="declWarn" style="display:none;color:red;font-size:11px;margin-top:6px;margin-left:26px">⚠ You must acknowledge the declaration before submitting.</div>
+</div>
+<div class="form-row" style="margin-bottom:12px">
+  <div class="form-group"><label>Name (Applicant) <span style="color:red">*</span></label><input type="text" id="declName"></div>
+  <div class="form-group"><label>Date <span style="color:red">*</span></label><input type="date" id="declDate"></div>
+</div>
+<div class="form-group" style="margin-bottom:8px">
+  <label>Signature <span style="color:red">*</span> (draw below)</label>
+  <div class="sig-wrap">
+    <canvas id="sigCanvas" class="sig-canvas"></canvas>
+    <div class="sig-btns"><button onclick="clearSig()">Clear Signature</button></div>
+  </div>
+</div>
+
+<!-- ID PHOTOS -->
+<div class="page-break"></div>
+<div class="section-title">Identification Document Photos</div>
+<label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-bottom:10px;cursor:pointer">
+  <input type="checkbox" id="usingPassport" style="width:16px;height:16px" onchange="toggleIdMode()">
+  Using Passport instead of I/C
+</label>
+<div style="display:flex;gap:16px;flex-wrap:wrap">
+  <div style="flex:1;min-width:220px">
+    <label style="font-size:12px;font-weight:600" id="idFrontLabel">I/C — Front <span style="color:red">*</span></label>
+    <div class="photo-box" id="idFrontBox" style="width:100%;height:160px;margin-top:4px">
+      <span class="ph-label">Click Camera or Gallery<br>to upload</span>
+    </div>
+    <div class="photo-btns" style="margin-top:4px">
+      <button type="button" id="btnIdFrontCam">Camera</button>
+      <button type="button" id="btnIdFrontGal">Gallery</button>
+      <button type="button" onclick="removeIdPhoto('idFront')">Clear</button>
+    </div>
+    <input type="file" id="idFrontInput" accept="image/*" style="display:none">
+  </div>
+  <div style="flex:1;min-width:220px">
+    <label style="font-size:12px;font-weight:600" id="idBackLabel">I/C — Back <span style="color:red">*</span></label>
+    <div class="photo-box" id="idBackBox" style="width:100%;height:160px;margin-top:4px">
+      <span class="ph-label">Click Camera or Gallery<br>to upload</span>
+    </div>
+    <div class="photo-btns" style="margin-top:4px">
+      <button type="button" id="btnIdBackCam">Camera</button>
+      <button type="button" id="btnIdBackGal">Gallery</button>
+      <button type="button" onclick="removeIdPhoto('idBack')">Clear</button>
+    </div>
+    <input type="file" id="idBackInput" accept="image/*" style="display:none">
+  </div>
+</div>
+
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <button class="btn-action btn-draft" id="btnSaveDraft" onclick="saveDraftServer()">&#128190; Save Draft</button>
+  <button class="btn-action btn-load" id="btnResumeDraft" onclick="openResumeModal()">&#128194; Resume Draft</button>
+  <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none" onchange="handleJsonFileLoad(event)">
+  <button class="btn-action" onclick="document.getElementById('jsonFileInput').click()" style="background:#546e7a;color:#fff">&#128194; Load from JSON</button>
+  <button class="btn-action" onclick="downloadJsonBackup()" style="background:#546e7a;color:#fff">&#128190; Download JSON</button>
+  <button class="btn-action" id="btnSubmit" onclick="submitApplication()" style="background:#1b5e20;color:#fff">&#128228; Submit Application</button>
+  <span class="autosave-status" id="autosaveStatus" style="margin-left:auto">Auto-save: waiting...</span>
+</div>
+
+</div><!-- /form-wrap -->
+
+<!-- CAMERA MODAL -->
+<div class="modal-bg" id="cameraModal" style="background:rgba(0,0,0,.92);z-index:200">
+  <div style="position:relative;width:100%;max-width:640px;margin:auto;display:flex;flex-direction:column;align-items:center;gap:10px;padding:12px">
+    <div style="font-size:13px;color:#fff;font-weight:600;letter-spacing:.5px" id="cameraModalTitle">Camera</div>
+    <div style="position:relative;width:100%;background:#000;border-radius:8px;overflow:hidden">
+      <video id="cameraVideo" autoplay playsinline style="width:100%;display:block;max-height:72vh;object-fit:cover"></video>
+      <canvas id="cameraOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none"></canvas>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:4px">
+      <button id="cameraCaptureBtn" style="padding:10px 28px;background:#1a7340;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer">📷 Capture</button>
+      <button id="cameraCancelBtn" style="padding:10px 20px;background:#555;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer">Cancel</button>
+    </div>
+    <div style="font-size:11px;color:#aaa;text-align:center" id="cameraHint">Position within the guide frame and tap Capture</div>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div id="successOverlay" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.98);z-index:500;align-items:center;justify-content:center;padding:24px">
+  <div style="max-width:440px;text-align:center">
+    <div style="font-size:52px;margin-bottom:12px">&#9989;</div>
+    <h3 style="margin-bottom:10px;color:#1b5e20">Application Submitted</h3>
+    <p style="font-size:13px;color:#555;line-height:1.6;margin-bottom:16px">Thank you. Your application has been received by MyEden Group. Our HR team will contact you regarding the next steps. You may now close this page.</p>
+    <button onclick="downloadJsonBackup()" style="padding:9px 16px;background:#546e7a;color:#fff;border:none;border-radius:6px;font-size:13px;cursor:pointer">&#128190; Download a copy (JSON)</button>
+  </div>
+</div>
+
+<!-- RESUME DRAFT MODAL -->
+<div class="modal-bg" id="resumeModal">
+  <div class="modal-inner">
+    <h3>&#128194; Resume Draft</h3>
+    <label>Draft Code</label>
+    <input type="text" id="resumeCodeInput" placeholder="Enter your 12-character draft code" autocapitalize="characters" autocomplete="off" spellcheck="false" style="font-family:monospace;letter-spacing:2px" onkeydown="if(event.key==='Enter') resumeDraft()">
+    <div id="resumeErr" style="color:red;font-size:12px;margin-top:-8px;margin-bottom:8px;display:none"></div>
+    <p style="font-size:11px;color:#888;line-height:1.5;margin-bottom:12px">Don't have a code? Contact MyEden Group HR and we will retrieve it for you. Loading a draft will replace anything currently entered on this form.</p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeResumeModal()">Cancel</button>
+      <button class="btn-confirm" onclick="resumeDraft()">Load Draft</button>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// ── VERSION (update only via UVN command) ──────────────────────────────────
+var FORM_VERSION = 'MEG-EAF-Applicant v2026.07.30-23:30';
+
+
+// ── CONFIG (Supabase backend) ────────────────────────────────────────────────
+var SUPABASE_URL = 'https://vzngfswtofegimfcoigx.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bmdmc3d0b2ZlZ2ltZmNvaWd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyODA5MzUsImV4cCI6MjEwMDg1NjkzNX0.47rTrOjzNgxarCBYGapqajLw5v_yATbeKitiyP6a2Sg';
+var DRAFT_CODE = '';
+
+var photoData = null;
+var idFrontData = null;
+var idBackData = null;
+var sigDrawing = false;
+var sigCtx, sigCanvas;
+var autoSaveTimer = null;
+var workExpCount = 0;
+
+function loadLogo(){
+  var img = document.getElementById('companyLogo');
+  img.src = "https://i.postimg.cc/Bb15Phb1/My-Eden-Group-Logo-icon-color.png";
+  img.onerror = function(){ img.style.display='none'; };
+}
+
+// ── IC → DOB ───────────────────────────────────────────────────────────────
+function extractDOB(){
+  var ic1 = document.getElementById('ic1').value.trim();
+  var dobField = document.getElementById('dob');
+  var hint = document.getElementById('dobHint');
+  var src = document.getElementById('dobSource');
+  if(ic1.length !== 6){ hint.textContent=''; return; }
+  var yy=parseInt(ic1.substring(0,2),10), mm=parseInt(ic1.substring(2,4),10), dd=parseInt(ic1.substring(4,6),10);
+  if(mm<1||mm>12||dd<1||dd>31){ hint.textContent='⚠ Invalid date in IC'; return; }
+  var curYY=new Date().getFullYear()%100;
+  var yyyy=yy<=curYY?2000+yy:1900+yy;
+  dobField.value=yyyy+'-'+String(mm).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
+  hint.textContent='✓ DOB extracted from IC';
+  src.textContent='(auto-filled from IC — editable)';
+  updateDobMandatory();
+  updateAge();
+}
+
+function checkPassport(){
+  updateDobMandatory();
+  var ic1=document.getElementById('ic1').value.trim();
+  var passport=document.getElementById('passport').value.trim();
+  if(!ic1 && passport){
+    document.getElementById('dob').value='';
+    document.getElementById('dobHint').textContent='';
+    document.getElementById('dobSource').textContent='(passport only — DOB required)';
+  }
+}
+
+function updateDobMandatory(){
+  var ic1=document.getElementById('ic1').value.trim();
+  var passport=document.getElementById('passport').value.trim();
+  var star=document.getElementById('dobStar');
+  // DOB mandatory only if passport-only
+  star.textContent = (!ic1 && passport) ? '*' : '';
+}
+
+// ── ID PHOTOS ──────────────────────────────────────────────────────────────
+function toggleIdMode(){
+  var isPassport = document.getElementById('usingPassport').checked;
+  var frontLbl = document.getElementById('idFrontLabel');
+  var backLbl = document.getElementById('idBackLabel');
+  if(isPassport){
+    frontLbl.innerHTML = 'Passport — Photo Page <span style="color:red">*</span>';
+    backLbl.innerHTML = 'Passport — Other Page <span style="color:#888;font-weight:400">(optional)</span>';
+  } else {
+    frontLbl.innerHTML = 'I/C — Front <span style="color:red">*</span>';
+    backLbl.innerHTML = 'I/C — Back <span style="color:red">*</span>';
+  }
+}
+
+function handleIdPhoto(inputId, boxId, varSetter){
+  var input = document.getElementById(inputId);
+  input.addEventListener('change', function(e){
+    var file = e.target.files[0]; if(!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      varSetter(ev.target.result);
+      var box = document.getElementById(boxId);
+      box.querySelector('.ph-label').style.display = 'none';
+      var old = box.querySelector('img.preview'); if(old) old.remove();
+      var img = document.createElement('img');
+      img.src = ev.target.result; img.className = 'preview';
+      box.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+    input.value = '';
+  });
+}
+
+function removeIdPhoto(which){
+  var box, setter;
+  if(which==='idFront'){ box=document.getElementById('idFrontBox'); idFrontData=null; }
+  else { box=document.getElementById('idBackBox'); idBackData=null; }
+  var img=box.querySelector('img.preview'); if(img) img.remove();
+  box.querySelector('.ph-label').style.display='';
+}
+
+// ── PHOTO ──────────────────────────────────────────────────────────────────
+function removePhoto(){
+  photoData=null;
+  var box=document.getElementById('photoBox');
+  var img=box.querySelector('img.preview'); if(img) img.remove();
+  box.querySelector('.ph-label').style.display='';
+}
+
+// ── TABLE ROWS ─────────────────────────────────────────────────────────────
+function addFamilyRow(){
+  var tb=document.getElementById('familyBody'), n=tb.rows.length+1, tr=tb.insertRow();
+  tr.innerHTML='<td><input type="text" value="'+n+'" style="width:30px"></td><td><input type="text" placeholder="N/A if none"></td><td><input type="number" min="0" style="width:45px"></td><td><input type="text"></td><td><input type="text"></td>';
+}
+function addAcademicRow(){
+  var tb=document.getElementById('academicBody'), n=tb.rows.length+1, tr=tb.insertRow();
+  tr.innerHTML='<td><input type="text" value="'+n+'" style="width:30px"></td><td><input type="text" placeholder="N/A if none"></td><td><input type="text"></td><td><input type="text"></td><td><input type="date"></td><td><input type="date"></td><td style="text-align:center"><label style="margin-right:4px"><input type="radio" name="grad'+n+'" value="Y"> Y</label><label><input type="radio" name="grad'+n+'" value="N"> N</label></td>';
+}
+function addWorkExp(){
+  workExpCount++;
+  var c=document.getElementById('workExpContainer'), d=document.createElement('div');
+  d.style.cssText='border:1px solid #ddd;padding:10px;margin-bottom:12px;border-radius:4px';
+  d.innerHTML='<div style="font-size:11px;font-weight:700;margin-bottom:8px;color:#555">Experience '+workExpCount+'</div>'
+    +'<div class="form-row"><div class="form-group"><label>From</label><input type="date"></div><div class="form-group"><label>To</label><input type="date"></div><div class="form-group"><label>Employer</label><input type="text"></div><div class="form-group"><label>Contact No</label><input type="text"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Job Title</label><input type="text"></div><div class="form-group"><label>Address</label><input type="text"></div></div>'
+    +'<div class="form-row"><div class="form-group"><label>Last Drawn Salary (RM)</label><input type="number" placeholder="0.00"></div></div>'
+    +'<div class="form-group" style="margin-bottom:8px"><label>Nature of work and responsibilities</label><textarea style="min-height:50px"></textarea></div>'
+    +'<div class="form-group"><label>Reason for leaving</label><input type="text"></div>';
+  c.appendChild(d);
+}
+
+// ── SIGNATURE ──────────────────────────────────────────────────────────────
+function initSig(){
+  sigCanvas=document.getElementById('sigCanvas');
+  sigCanvas.width=sigCanvas.parentElement.offsetWidth||300;
+  sigCanvas.height=100;
+  sigCtx=sigCanvas.getContext('2d');
+  sigCtx.strokeStyle='#222'; sigCtx.lineWidth=2; sigCtx.lineCap='round';
+  function pos(e){ var r=sigCanvas.getBoundingClientRect(); if(e.touches) return {x:e.touches[0].clientX-r.left,y:e.touches[0].clientY-r.top}; return {x:e.clientX-r.left,y:e.clientY-r.top}; }
+  sigCanvas.addEventListener('mousedown',function(e){sigDrawing=true;var p=pos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);});
+  sigCanvas.addEventListener('mousemove',function(e){if(!sigDrawing)return;var p=pos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();});
+  sigCanvas.addEventListener('mouseup',function(){sigDrawing=false;});
+  sigCanvas.addEventListener('mouseleave',function(){sigDrawing=false;});
+  sigCanvas.addEventListener('touchstart',function(e){e.preventDefault();sigDrawing=true;var p=pos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);},{passive:false});
+  sigCanvas.addEventListener('touchmove',function(e){e.preventDefault();if(!sigDrawing)return;var p=pos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();},{passive:false});
+  sigCanvas.addEventListener('touchend',function(){sigDrawing=false;});
+}
+function clearSig(){ if(sigCtx) sigCtx.clearRect(0,0,sigCanvas.width,sigCanvas.height); }
+function isSigBlank(){
+  if(!sigCanvas) return true;
+  var d=sigCtx.getImageData(0,0,sigCanvas.width,sigCanvas.height).data;
+  for(var i=3;i<d.length;i+=4){ if(d[i]>0) return false; }
+  return true;
+}
+
+// ── VALIDATION ─────────────────────────────────────────────────────────────
+function clearErrors(){
+  document.querySelectorAll('.field-err').forEach(function(el){ el.classList.remove('field-err'); });
+  document.querySelectorAll('.field-err-cb').forEach(function(el){ el.classList.remove('field-err-cb'); });
+  var eb=document.getElementById('errBox'); eb.style.display='none'; eb.innerHTML='';
+}
+
+function markErr(el, msg){ if(el){ el.classList.add('field-err'); } return msg; }
+function markGroupErr(el, msg){ if(el){ el.classList.add('field-err-cb'); } return msg; }
+
+function validateDraft(){
+  clearErrors();
+  var errs=[];
+  var ic1=document.getElementById('ic1').value.trim();
+  var passport=document.getElementById('passport').value.trim();
+
+  // Full name
+  if(!document.getElementById('nameEnglish').value.trim() && !document.getElementById('nameChinese').value.trim())
+    errs.push(markErr(document.getElementById('nameEnglish'),'Full Name (English or Chinese) is required'));
+
+  // Date of application
+  if(!document.getElementById('appDate').value)
+    errs.push(markErr(document.getElementById('appDate'),'Date of Application is required'));
+
+  // IC or Passport
+  if(!ic1 && !passport)
+    errs.push(markErr(document.getElementById('ic1'),'I/C No or Passport No is required'));
+
+  // DOB mandatory if passport only
+  if(!ic1 && passport && !document.getElementById('dob').value)
+    errs.push(markErr(document.getElementById('dob'),'Date of Birth is required when using Passport only'));
+
+  // Gender
+  if(!document.querySelector('input[name="gender"]:checked'))
+    errs.push(markGroupErr(document.getElementById('genderGroup'),'Gender is required'));
+
+  // Marital status
+  if(!document.querySelector('input[name="marital"]:checked'))
+    errs.push(markGroupErr(document.getElementById('maritalGroup'),'Marital Status is required'));
+
+  // Race
+  if(!document.querySelector('input[name="race"]:checked'))
+    errs.push(markGroupErr(document.getElementById('raceGroup'),'Race is required'));
+
+  // Religion
+  if(!document.querySelector('input[name="religion"]:checked'))
+    errs.push(markGroupErr(document.getElementById('religionGroup'),'Religion is required'));
+
+  // Address (structured)
+  if(!document.getElementById('addr1').value.trim())
+    errs.push(markErr(document.getElementById('addr1'),'Address Line 1 is required'));
+  if(!document.getElementById('postcodeTown').value.trim())
+    errs.push(markErr(document.getElementById('postcodeTown'),'Postcode & Town is required'));
+  if(!document.getElementById('addrState').value.trim())
+    errs.push(markErr(document.getElementById('addrState'),'State is required'));
+  if(!document.getElementById('contact').value.trim())
+    errs.push(markErr(document.getElementById('contact'),'Contact No is required'));
+  if(!document.getElementById('email').value.trim())
+    errs.push(markErr(document.getElementById('email'),'E-mail is required'));
+
+  // Intended post
+  if(!document.querySelector('input[name="post"]:checked'))
+    errs.push(markGroupErr(document.getElementById('postGroup'),'Intended Post: please tick at least one'));
+
+  // Desired working hour
+  if(!document.querySelector('input[name="workhour"]:checked'))
+    errs.push(markGroupErr(document.getElementById('workhourGroup'),'Desired Working Hour: please tick at least one'));
+
+  // Working hours time range
+  if(!document.getElementById('workFrom').value || !document.getElementById('workTo').value)
+    errs.push(markErr(document.getElementById('workFrom'),'Working Hours (From/To) is required'));
+
+  // Salary
+  if(!document.getElementById('salary').value)
+    errs.push(markErr(document.getElementById('salary'),'Expected Salary is required'));
+
+  // Spoken language
+  if(!document.querySelector('input[name="spoken"]:checked') && !document.getElementById('spokenOther').value.trim())
+    errs.push(markGroupErr(document.getElementById('spokenGroup'),'Spoken Language: please tick at least one'));
+
+  // Written language
+  if(!document.querySelector('input[name="written"]:checked') && !document.getElementById('writtenOther').value.trim())
+    errs.push(markGroupErr(document.getElementById('writtenGroup'),'Written Language: please tick at least one'));
+
+  // Other details
+  ['q1','q2','q3','q4'].forEach(function(q,i){
+    if(!document.querySelector('input[name="'+q+'"]:checked'))
+      errs.push(markGroupErr(document.getElementById(q+'Group'),'Other Details Q'+(i+1)+': answer required'));
+  });
+
+  // Declaration
+  if(!document.getElementById('declAgree').checked){
+    document.getElementById('declWarn').style.display='block';
+    errs.push('Declaration acknowledgment is required');
+  }
+  if(!document.getElementById('declName').value.trim())
+    errs.push(markErr(document.getElementById('declName'),'Applicant Name (Declaration) is required'));
+  if(!document.getElementById('declDate').value)
+    errs.push(markErr(document.getElementById('declDate'),'Declaration Date is required'));
+
+  // Signature
+  if(isSigBlank())
+    errs.push(markErr(document.getElementById('sigCanvas'),'Signature is required'));
+
+  // ID Photos
+  var isPassportMode = document.getElementById('usingPassport').checked;
+  if(!idFrontData)
+    errs.push(markErr(document.getElementById('idFrontBox'), (isPassportMode?'Passport photo page':'I/C Front photo') + ' is required'));
+  if(!isPassportMode && !idBackData)
+    errs.push(markErr(document.getElementById('idBackBox'),'I/C Back photo is required'));
+
+  return errs;
+}
+
+function showErrors(errs){
+  if(errs.length===0) return;
+  var eb=document.getElementById('errBox');
+  eb.innerHTML='<strong>Please complete the following before saving:</strong><ul style="margin-top:6px;padding-left:18px">'
+    +errs.map(function(e){return '<li>'+e+'</li>';}).join('')+'</ul>';
+  eb.style.display='block';
+  eb.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── SMART FILENAME ─────────────────────────────────────────────────────────
+function getDefaultFileName(){
+  var eng=(document.getElementById('nameEnglish').value||'').trim();
+  var chi=(document.getElementById('nameChinese').value||'').trim();
+  var appDate=(document.getElementById('appDate').value||'').trim();
+  var base=eng||chi||appDate||new Date().toISOString().slice(0,10);
+  base=base.replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_\u4e00-\u9fff\-]/g,'');
+  return 'MEG-EAF_'+base;
+}
+
+// ── COLLECT / RESTORE ──────────────────────────────────────────────────────
+function collectFormData(){
+  var d={};
+  ['appDate','nameChinese','nameEnglish','ic1','ic2','ic3','passport','dob',
+   'children','maritalOther','raceOther','religionOther','addr1','addr2','addr3','postcodeTown','addrState','contact','email',
+   'postOther','postOtherOps','workHourOther','workFrom','workTo','startDate','salary',
+   'spokenOther','writtenOther','specialSkills','yesDetails',
+   'relName','relRelationship','relDept','relJobTitle',
+   'declName','declDate','interviewedBy','interviewedBy2','decision','finalSalary',
+   'finalFrom','finalTo','finalStart','finalDept','docOther','officeComments',
+   'approvedJobTitle','reportingName','reportingTitle','finalSalaryWords','mgmtAppendix1','manualLetterType',
+   'hrNotes','notedBy','notesDate'].forEach(function(id){
+    var el=document.getElementById(id); if(el) d[id]=el.value;
+  });
+  d['website']=(document.getElementById('website')||{value:''}).value;
+  ['gender','marital','race','religion','q1','q2','q3','q4'].forEach(function(n){
+    var el=document.querySelector('input[name="'+n+'"]:checked');
+    d['radio_'+n]=el?el.value:'';
+  });
+  ['post','workhour','spoken','written','source','doc'].forEach(function(n){
+    d['cb_'+n]=Array.from(document.querySelectorAll('input[name="'+n+'"]:checked')).map(function(el){return el.value;});
+  });
+  d['declAgree']=document.getElementById('declAgree').checked;
+  d['usingPassport']=document.getElementById('usingPassport').checked;
+  d['photoData']=photoData||'';
+  d['idFrontData']=idFrontData||'';
+  d['idBackData']=idBackData||'';
+  d['sigData']=sigCanvas?sigCanvas.toDataURL():'';
+  d['familyRows']=[];
+  document.querySelectorAll('#familyBody tr').forEach(function(tr){
+    d['familyRows'].push(Array.from(tr.querySelectorAll('input')).map(function(i){return i.value;}));
+  });
+  d['academicRows']=[];
+  document.querySelectorAll('#academicBody tr').forEach(function(tr){
+    d['academicRows'].push(Array.from(tr.querySelectorAll('input')).map(function(i){return i.type==='radio'?(i.checked?i.value:''):i.value;}));
+  });
+  d['workExpCount']=workExpCount;
+  d['workExpData']=[];
+  document.querySelectorAll('#workExpContainer>div').forEach(function(block){
+    d['workExpData'].push(Array.from(block.querySelectorAll('input,textarea')).map(function(i){return i.value;}));
+  });
+  return d;
+}
+
+function restoreFormData(d){
+  ['appDate','nameChinese','nameEnglish','ic1','ic2','ic3','passport','dob',
+   'children','maritalOther','raceOther','religionOther','addr1','addr2','addr3','postcodeTown','addrState','contact','email',
+   'postOther','postOtherOps','workHourOther','workFrom','workTo','startDate','salary',
+   'spokenOther','writtenOther','specialSkills','yesDetails',
+   'relName','relRelationship','relDept','relJobTitle',
+   'declName','declDate','interviewedBy','interviewedBy2','decision','finalSalary',
+   'finalFrom','finalTo','finalStart','finalDept','docOther','officeComments',
+   'approvedJobTitle','reportingName','reportingTitle','finalSalaryWords','mgmtAppendix1','manualLetterType',
+   'hrNotes','notedBy','notesDate'].forEach(function(id){
+    var el=document.getElementById(id); if(el&&d[id]!==undefined) el.value=d[id];
+  });
+  ['gender','marital','race','religion','q1','q2','q3','q4'].forEach(function(n){
+    if(d['radio_'+n]){ var el=document.querySelector('input[name="'+n+'"][value="'+d['radio_'+n]+'"]'); if(el) el.checked=true; }
+  });
+  ['post','workhour','spoken','written','source','doc'].forEach(function(n){
+    if(d['cb_'+n]) d['cb_'+n].forEach(function(v){ var el=document.querySelector('input[name="'+n+'"][value="'+v+'"]'); if(el) el.checked=true; });
+  });
+  if(d['declAgree']) document.getElementById('declAgree').checked=true;
+  if(d['usingPassport']){ document.getElementById('usingPassport').checked=true; toggleIdMode(); }
+  if(d['photoData']){ photoData=d['photoData']; var box=document.getElementById('photoBox'); box.querySelector('.ph-label').style.display='none'; var img=document.createElement('img'); img.src=photoData; img.className='preview'; box.appendChild(img); }
+  if(d['idFrontData']){ idFrontData=d['idFrontData']; var fb=document.getElementById('idFrontBox'); fb.querySelector('.ph-label').style.display='none'; var fi=document.createElement('img'); fi.src=idFrontData; fi.className='preview'; fb.appendChild(fi); }
+  if(d['idBackData']){ idBackData=d['idBackData']; var bb=document.getElementById('idBackBox'); bb.querySelector('.ph-label').style.display='none'; var bi=document.createElement('img'); bi.src=idBackData; bi.className='preview'; bb.appendChild(bi); }
+  if(d['workExpCount']){
+    document.getElementById('workExpContainer').innerHTML=''; workExpCount=0;
+    for(var i=0;i<d['workExpCount'];i++) addWorkExp();
+    document.querySelectorAll('#workExpContainer>div').forEach(function(block,bi){
+      if(d['workExpData']&&d['workExpData'][bi]) Array.from(block.querySelectorAll('input,textarea')).forEach(function(el,ei){ el.value=d['workExpData'][bi][ei]||''; });
+    });
+  }
+  if(d['familyRows']&&d['familyRows'].length>0){
+    var ftb=document.getElementById('familyBody');
+    ftb.innerHTML='';
+    d['familyRows'].forEach(function(row){
+      addFamilyRow();
+      var tr=ftb.rows[ftb.rows.length-1];
+      Array.from(tr.querySelectorAll('input')).forEach(function(inp,idx){
+        inp.value=row[idx]||'';
+      });
+    });
+  }
+  if(d['academicRows']&&d['academicRows'].length>0){
+    var atb=document.getElementById('academicBody');
+    atb.innerHTML='';
+    d['academicRows'].forEach(function(row){
+      addAcademicRow();
+      var tr=atb.rows[atb.rows.length-1];
+      Array.from(tr.querySelectorAll('input')).forEach(function(inp,idx){
+        if(inp.type==='radio'){
+          if(row[idx]) inp.checked=(inp.value===row[idx]);
+        } else {
+          inp.value=row[idx]||'';
+        }
+      });
+    });
+  }
+  if(d['sigData']&&sigCtx){ var img2=new Image(); img2.onload=function(){ sigCtx.drawImage(img2,0,0); }; img2.src=d['sigData']; }
+  document.getElementById('dobSource').textContent=d['dob']?'(loaded from draft)':'';
+  updateDobMandatory();
+  updateAge();
+}
+
+// ── AUTO-SAVE ──────────────────────────────────────────────────────────────
+function scheduleAutoSave(){
+  clearTimeout(autoSaveTimer);
+  document.getElementById('autosaveStatus').textContent='Auto-save: pending...';
+  autoSaveTimer=setTimeout(function(){
+    try{ localStorage.setItem('meg_draft',JSON.stringify(collectFormData())); localStorage.setItem('meg_draft_time',new Date().toLocaleString()); document.getElementById('autosaveStatus').textContent='Auto-saved: '+new Date().toLocaleTimeString(); }
+    catch(e){ document.getElementById('autosaveStatus').textContent='Auto-save failed'; }
+  },1500);
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// SUPABASE BACKEND LAYER (token gate · server drafts · submission)
+// ═══════════════════════════════════════════════════════════════════════
+
+function sbHeaders(){
+  return {'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY};
+}
+
+function sbRpc(fn, args){
+  return fetch(SUPABASE_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:sbHeaders(),body:JSON.stringify(args)})
+    .then(function(r){
+      return r.text().then(function(txt){
+        var body=null; try{ body=JSON.parse(txt); }catch(e){}
+        if(!r.ok){ var msg=(body&&(body.message||body.hint))||('HTTP '+r.status); throw new Error(msg); }
+        return body;
+      });
+    });
+}
+
+
+// ── JSON BACKUP: download the current form as a local .json file, or load one back in ─────
+function buildJsonFilename(d){
+  var name=(d['nameEnglish']||d['nameChinese']||'application').toString().trim().replace(/[^a-z0-9]+/gi,'_')||'application';
+  var stamp=new Date().toISOString().slice(0,10);
+  return 'MEG-EAF_'+name+'_'+stamp+'.json';
+}
+
+function downloadJsonBackup(){
+  var data=collectFormData();
+  var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');
+  a.href=url; a.download=buildJsonFilename(data);
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function handleJsonFileLoad(evt){
+  var file=evt.target.files && evt.target.files[0];
+  if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(){
+    var data;
+    try{ data=JSON.parse(reader.result); }
+    catch(e){ alert('Could not read this file \u2014 it does not look like a valid MEG-EAF JSON backup.'); evt.target.value=''; return; }
+    if(!confirm('Load this file? It will replace anything currently entered on this form.')){ evt.target.value=''; return; }
+    restoreFormData(data);
+    document.getElementById('autosaveStatus').textContent='Loaded from '+file.name;
+    evt.target.value='';
+  };
+  reader.onerror=function(){ alert('Could not read the file.'); evt.target.value=''; };
+  reader.readAsText(file);
+}
+
+// ── LOCAL AUTO-RESUME (same device, no codes shown) ──────────────────
+function tryAutoResume(){
+  var code='';
+  try{ code = localStorage.getItem('meg_draft_code') || ''; }catch(e){}
+  if(code){
+    sbRpc('get_draft',{code:code}).then(function(data){
+      if(confirm('You have a saved draft on our server. Continue where you left off?')){
+        restoreFormData(data);
+        DRAFT_CODE=code;
+        document.getElementById('autosaveStatus').textContent='Draft loaded: '+new Date().toLocaleTimeString();
+      }
+    }).catch(function(){
+      // Server draft gone (expired or submitted elsewhere) - forget the code, try local autosave
+      try{ localStorage.removeItem('meg_draft_code'); }catch(e){}
+      tryLocalAutosaveResume();
+    });
+  } else {
+    tryLocalAutosaveResume();
+  }
+}
+
+function tryLocalAutosaveResume(){
+  var raw=null, when='';
+  try{ raw = localStorage.getItem('meg_draft'); when = localStorage.getItem('meg_draft_time')||''; }catch(e){}
+  if(!raw) return;
+  try{
+    var d=JSON.parse(raw);
+    if(confirm('Unsaved work from '+(when||'a previous visit')+' was found on this device. Restore it?')){
+      restoreFormData(d);
+      document.getElementById('autosaveStatus').textContent='Restored auto-saved work';
+    }
+  }catch(e){}
+}
+
+// ── SERVER DRAFTS (resumable code) ──────────────────────────────────
+function saveDraftServer(){
+  var btn=document.getElementById('btnSaveDraft');
+  btn.disabled=true;
+  sbRpc('save_draft',{code:DRAFT_CODE||'',data:collectFormData()})
+    .then(function(code){
+      DRAFT_CODE=code;
+      try{ localStorage.setItem('meg_draft_code',code); }catch(e){}
+      document.getElementById('autosaveStatus').textContent='Draft saved \u2713 '+new Date().toLocaleTimeString();
+    })
+    .catch(function(err){
+      if(String(err.message).indexOf('DRAFT_NOT_FOUND')>-1 && DRAFT_CODE){
+        DRAFT_CODE='';
+        saveDraftServer();
+        return;
+      }
+      alert('Could not save draft: '+err.message+'\nPlease check your internet connection and try again.');
+    })
+    .finally(function(){ btn.disabled=false; });
+}
+
+function openResumeModal(){
+  document.getElementById('resumeCodeInput').value='';
+  document.getElementById('resumeErr').style.display='none';
+  document.getElementById('resumeModal').classList.add('active');
+  setTimeout(function(){ document.getElementById('resumeCodeInput').focus(); },100);
+}
+function closeResumeModal(){ document.getElementById('resumeModal').classList.remove('active'); }
+
+function resumeDraft(){
+  var code=document.getElementById('resumeCodeInput').value.trim().toUpperCase();
+  var errEl=document.getElementById('resumeErr');
+  if(!code){ errEl.textContent='Please enter your draft code.'; errEl.style.display='block'; return; }
+  errEl.style.display='none';
+  sbRpc('get_draft',{code:code})
+    .then(function(data){
+      restoreFormData(data);
+      DRAFT_CODE=code;
+      try{ localStorage.setItem('meg_draft_code',code); }catch(e){}
+      closeResumeModal();
+      document.getElementById('autosaveStatus').textContent='Draft loaded: '+new Date().toLocaleTimeString();
+    })
+    .catch(function(err){
+      if(String(err.message).indexOf('DRAFT_NOT_FOUND')>-1){
+        errEl.textContent='No draft found for this code. It may have expired (drafts are kept 14 days) or the code was mistyped. Contact MyEden Group HR if you need help.';
+      }else{
+        errEl.textContent='Could not load draft: '+err.message;
+      }
+      errEl.style.display='block';
+    });
+}
+
+// ── SUBMISSION ────────────────────────────────────────────────────────────
+function submitApplication(){
+  var errs=validateDraft();
+  if(errs.length>0){ showErrors(errs); return; }
+  clearErrors();
+  if(!confirm('Submit your application to MyEden Group?\n\nPlease make sure all information is correct — the application cannot be changed after submission.')) return;
+  var btn=document.getElementById('btnSubmit');
+  btn.disabled=true; btn.textContent='Submitting...';
+  fetch(SUPABASE_URL+'/rest/v1/eaf_applications',{
+    method:'POST',
+    headers:Object.assign(sbHeaders(),{'Prefer':'return=minimal'}),
+    body:JSON.stringify({payload:collectFormData()})
+  }).then(function(r){
+    if(!r.ok){
+      return r.text().then(function(txt){
+        var body=null; try{ body=JSON.parse(txt); }catch(e){}
+        var msg=(body&&(body.message||body.hint))||('HTTP '+r.status);
+        if(r.status===401||r.status===403||String(msg).toLowerCase().indexOf('policy')>-1){
+          msg='your access link may have expired — please contact MyEden Group HR';
+        }
+        throw new Error(msg);
+      });
+    }
+    if(DRAFT_CODE){ sbRpc('delete_draft',{code:DRAFT_CODE}).catch(function(){}); }
+    try{ localStorage.removeItem('meg_draft'); localStorage.removeItem('meg_draft_code'); localStorage.removeItem('meg_draft_time'); }catch(e){}
+    document.getElementById('successOverlay').style.display='flex';
+  }).catch(function(err){
+    alert('Submission failed: '+err.message+'.\nYour information is still on this page — nothing has been lost. Please try again, or save a draft and contact HR.');
+  }).finally(function(){ btn.disabled=false; btn.innerHTML='&#128228; Submit Application'; });
+}
+
+// ── CAMERA MODAL ENGINE ───────────────────────────────────────────────────
+var cameraStream = null;
+var cameraTarget = null; // 'passport' | 'idFront' | 'idBack'
+var cameraFrameRaf = null;
+
+var CAMERA_FRAME = {
+  passport: { label:'Passport Size Photo',            color:'#4caf50', facingMode:'environment', aspectRatio: 35/45,    fitFraction: 0.65 },
+  idFront:  { label:'I/C Front \u2014 align within frame', color:'#2196f3', facingMode:'environment', aspectRatio: 85.6/53.98, fitFraction: 0.88 },
+  idBack:   { label:'I/C Back \u2014 align within frame',  color:'#2196f3', facingMode:'environment', aspectRatio: 85.6/53.98, fitFraction: 0.88 }
+};
+
+// Compute frame rectangle that maintains the card's true aspect ratio
+// regardless of container orientation or screen size.
+function computeFrame(W, H, cfg){
+  var ratio = cfg.aspectRatio; // width / height
+  var fit   = cfg.fitFraction;
+  var fw = W * fit;
+  var fh = fw / ratio;
+  if(fh > H * fit){ fh = H * fit; fw = fh * ratio; }
+  return { fw:fw, fh:fh, fx:(W-fw)/2, fy:(H-fh)/2 };
+}
+
+function openCameraModal(target){
+  cameraTarget = target;
+  var cfg = CAMERA_FRAME[target];
+
+  // ── Layer 2: pre-flight checks ──────────────────────────────────────────
+  // If not a secure context (file://) getUserMedia will always fail.
+  // Fall back immediately to native file-capture — no error shown to user.
+  if(!window.isSecureContext){
+    _cameraFallback(target, cfg);
+    return;
+  }
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    _cameraFallback(target, cfg);
+    return;
+  }
+
+  // ── Layer 1: request permission BEFORE showing any overlay ───────────────
+  // This is the critical fix: Chrome on Android blocks permission dialogs
+  // when a full-screen overlay is already visible (anti-clickjacking guard).
+  // We get the stream first; only then do we open the modal.
+  navigator.mediaDevices.getUserMedia({
+    video:{ facingMode:{ ideal: cfg.facingMode }, width:{ ideal:1280 }, height:{ ideal:720 } }
+  }).then(function(stream){
+    // Stream granted — NOW it is safe to show the overlay
+    cameraStream = stream;
+    document.getElementById('cameraModalTitle').textContent = cfg.label;
+    document.getElementById('cameraHint').textContent =
+      (target==='passport') ? 'Point the camera at the applicant and align their face within the green frame' :
+      'Hold your I/C flat and steady within the blue frame';
+    document.getElementById('cameraModal').classList.add('active');
+    var video = document.getElementById('cameraVideo');
+    video.srcObject = stream;
+    video.onloadedmetadata = function(){ video.play(); drawFrameGuide(); };
+  }).catch(function(err){
+    // Permission denied, hardware unavailable, or any other failure →
+    // fall back silently to native camera file input (no alert, no disruption)
+    _cameraFallback(target, cfg);
+  });
+}
+
+// Native file-input fallback — triggers device camera app directly,
+// works on any protocol and requires no browser permission prompt.
+function _cameraFallback(target, cfg){
+  var inputId = target==='passport' ? 'photoInput' :
+                target==='idFront'  ? 'idFrontInput' : 'idBackInput';
+  var input = document.getElementById(inputId);
+  // environment camera for documents, user (selfie) for passport photo
+  input.setAttribute('capture', cfg.facingMode==='user' ? 'user' : 'environment');
+  input.click();
+}
+
+function drawFrameGuide(){
+  if(!cameraStream){ return; }
+  var overlay = document.getElementById('cameraOverlay');
+  var cfg = CAMERA_FRAME[cameraTarget];
+
+  // Use getBoundingClientRect for reliable live CSSOM dimensions.
+  // offsetWidth/Height can return 0 during the layout reflow triggered by
+  // video metadata loading — getBoundingClientRect reads the live box directly.
+  var rect = overlay.getBoundingClientRect();
+  var W = Math.round(rect.width);
+  var H = Math.round(rect.height);
+
+  if(!W || !H){
+    // Container not laid out yet — retry next animation frame automatically
+    cameraFrameRaf = requestAnimationFrame(drawFrameGuide);
+    return;
+  }
+
+  // Only resize canvas backing-store when dimensions actually change
+  // (avoids clearing the canvas unnecessarily on every rAF tick)
+  if(overlay.width !== W) overlay.width = W;
+  if(overlay.height !== H) overlay.height = H;
+
+  var f = computeFrame(W, H, cfg);
+  var fx = f.fx, fy = f.fy, fw = f.fw, fh = f.fh;
+  var r = 10;
+
+  var ctx = overlay.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+
+  // Dim surround
+  ctx.fillStyle = 'rgba(0,0,0,0.52)';
+  ctx.fillRect(0,0,W,H);
+
+  // Punch out the card window
+  ctx.clearRect(fx, fy, fw, fh);
+
+  // Guide border
+  ctx.strokeStyle = cfg.color;
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(fx+r, fy);
+  ctx.lineTo(fx+fw-r, fy);
+  ctx.quadraticCurveTo(fx+fw, fy,    fx+fw, fy+r);
+  ctx.lineTo(fx+fw, fy+fh-r);
+  ctx.quadraticCurveTo(fx+fw, fy+fh, fx+fw-r, fy+fh);
+  ctx.lineTo(fx+r, fy+fh);
+  ctx.quadraticCurveTo(fx, fy+fh,    fx, fy+fh-r);
+  ctx.lineTo(fx, fy+r);
+  ctx.quadraticCurveTo(fx, fy,       fx+r, fy);
+  ctx.closePath();
+  ctx.stroke();
+
+  // Corner tick marks
+  var t = 20;
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = '#fff';
+  [[fx,fy,1,1],[fx+fw,fy,-1,1],[fx,fy+fh,1,-1],[fx+fw,fy+fh,-1,-1]].forEach(function(c){
+    ctx.beginPath();
+    ctx.moveTo(c[0]+c[2]*t, c[1]);
+    ctx.lineTo(c[0], c[1]);
+    ctx.lineTo(c[0], c[1]+c[3]*t);
+    ctx.stroke();
+  });
+
+  cameraFrameRaf = requestAnimationFrame(drawFrameGuide);
+}
+
+function captureCameraPhoto(){
+  var video = document.getElementById('cameraVideo');
+  var cfg = CAMERA_FRAME[cameraTarget];
+  var vw = video.videoWidth, vh = video.videoHeight;
+  if(!vw || !vh){ alert('Camera not ready \u2014 please wait a moment.'); return; }
+
+  var displayW = video.offsetWidth  || video.clientWidth;
+  var displayH = video.offsetHeight || video.clientHeight;
+  var f = computeFrame(displayW, displayH, cfg);
+
+  // The video element uses object-fit:cover which scales it uniformly so
+  // the video covers the entire container, cropping the excess symmetrically.
+  // A single uniform scale s maps display-pixels back to video-pixels.
+  // We also need the centering offset to account for the cropped-off edges.
+  var s    = Math.max(displayW / vw, displayH / vh); // uniform cover scale
+  var xOff = (vw * s - displayW) / 2;               // display-px of hidden left edge
+  var yOff = (vh * s - displayH) / 2;               // display-px of hidden top edge
+
+  var cropX = Math.max(0, (f.fx + xOff) / s);
+  var cropY = Math.max(0, (f.fy + yOff) / s);
+  var cropW = Math.min(f.fw / s, vw - cropX);
+  var cropH = Math.min(f.fh / s, vh - cropY);
+
+  var offscreen = document.createElement('canvas');
+  offscreen.width  = Math.round(cropW);
+  offscreen.height = Math.round(cropH);
+  offscreen.getContext('2d').drawImage(video, cropX, cropY, cropW, cropH, 0, 0, offscreen.width, offscreen.height);
+  var dataUrl = offscreen.toDataURL('image/jpeg', 0.88);
+  closeCameraModal();
+  applyCameraCapture(cameraTarget, dataUrl);
+}
+
+function applyCameraCapture(target, dataUrl){
+  function setBox(boxId, dataSetter){
+    dataSetter(dataUrl);
+    var box = document.getElementById(boxId);
+    box.querySelector('.ph-label').style.display='none';
+    var old=box.querySelector('img.preview'); if(old) old.remove();
+    var img=document.createElement('img'); img.src=dataUrl; img.className='preview';
+    box.appendChild(img);
+  }
+  if(target==='passport'){
+    setBox('photoBox', function(v){ photoData=v; });
+  } else if(target==='idFront'){
+    setBox('idFrontBox', function(v){ idFrontData=v; });
+  } else {
+    setBox('idBackBox', function(v){ idBackData=v; });
+  }
+  scheduleAutoSave();
+}
+
+function closeCameraModal(){
+  if(cameraFrameRaf){ cancelAnimationFrame(cameraFrameRaf); cameraFrameRaf=null; }
+  if(cameraStream){ cameraStream.getTracks().forEach(function(t){t.stop();}); cameraStream=null; }
+  var video = document.getElementById('cameraVideo');
+  video.srcObject = null;
+  var overlay = document.getElementById('cameraOverlay');
+  overlay.getContext('2d').clearRect(0,0,overlay.width,overlay.height);
+  document.getElementById('cameraModal').classList.remove('active');
+}
+
+// ── AGE CALCULATION ────────────────────────────────────────────────────────
+function calcAge(dobValue){
+  if(!dobValue) return '';
+  var dob = new Date(dobValue+'T00:00:00');
+  if(isNaN(dob.getTime())) return '';
+  var today = new Date();
+  var age = today.getFullYear() - dob.getFullYear();
+  var m = today.getMonth() - dob.getMonth();
+  if(m < 0 || (m===0 && today.getDate() < dob.getDate())) age--;
+  return age >= 0 ? String(age) : '';
+}
+
+function updateAge(){
+  document.getElementById('dobAge').value = calcAge(document.getElementById('dob').value);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+window.onload=function(){
+  loadLogo();
+  document.getElementById('formRef').textContent=FORM_VERSION;
+  var t=new Date();
+  document.getElementById('appDate').value=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+
+  var photoInput=document.getElementById('photoInput');
+  document.getElementById('btnCamera').addEventListener('click',function(){ openCameraModal('passport'); });
+  document.getElementById('btnGallery').addEventListener('click',function(){ photoInput.removeAttribute('capture'); photoInput.click(); });
+  photoInput.addEventListener('change',function(e){
+    var file=e.target.files[0]; if(!file) return;
+    var reader=new FileReader(); reader.onload=function(ev){ photoData=ev.target.result; var box=document.getElementById('photoBox'); box.querySelector('.ph-label').style.display='none'; var old=box.querySelector('img.preview'); if(old) old.remove(); var img=document.createElement('img'); img.src=photoData; img.className='preview'; box.appendChild(img); };
+    reader.readAsDataURL(file); photoInput.value='';
+  });
+
+  // ID photo buttons — Camera → modal, Gallery → file picker
+  document.getElementById('btnIdFrontCam').addEventListener('click',function(){ openCameraModal('idFront'); });
+  document.getElementById('btnIdFrontGal').addEventListener('click',function(){ var i=document.getElementById('idFrontInput'); i.removeAttribute('capture'); i.click(); });
+  document.getElementById('btnIdBackCam').addEventListener('click',function(){ openCameraModal('idBack'); });
+  document.getElementById('btnIdBackGal').addEventListener('click',function(){ var i=document.getElementById('idBackInput'); i.removeAttribute('capture'); i.click(); });
+
+  // Camera modal buttons
+  document.getElementById('cameraCaptureBtn').addEventListener('click', captureCameraPhoto);
+  document.getElementById('cameraCancelBtn').addEventListener('click', closeCameraModal);
+  document.getElementById('btnIdBackGal').addEventListener('click',function(){ var i=document.getElementById('idBackInput'); i.removeAttribute('capture'); i.click(); });
+  handleIdPhoto('idFrontInput','idFrontBox',function(v){ idFrontData=v; });
+  handleIdPhoto('idBackInput','idBackBox',function(v){ idBackData=v; });
+
+  addFamilyRow(); addFamilyRow(); addFamilyRow();
+  addAcademicRow(); addAcademicRow(); addAcademicRow();
+  addWorkExp(); addWorkExp();
+  setTimeout(initSig,150);
+
+  document.getElementById('appForm').addEventListener('input',scheduleAutoSave);
+  document.getElementById('appForm').addEventListener('change',scheduleAutoSave);
+  // Offer to restore previous work (after the signature pad is ready)
+  try{ DRAFT_CODE = localStorage.getItem('meg_draft_code') || ''; }catch(e){}
+  setTimeout(tryAutoResume, 400);
+};
+</script>
+</body>
+</html>
