@@ -72,7 +72,8 @@
     background:linear-gradient(90deg,var(--text-1),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
   .sub{font-size:13px;color:var(--text-2);margin-bottom:36px;}
 
-  .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+  @media (max-width:860px){ .cards{grid-template-columns:1fr 1fr;} }
   @media (max-width:520px){ .cards{grid-template-columns:1fr;} }
   .card{
     background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 22px;
@@ -113,6 +114,12 @@
       <div class="card-name">HR Staff Login</div>
       <div class="card-desc">For authorized HR staff to review applications and manage hiring decisions.</div>
       <div class="card-arrow" style="color:var(--accent-purple);">Sign In →</div>
+    </a>
+    <a class="card" href="jd-manual.html" style="--card-accent:#f59e0b;--card-icon-bg:rgba(245,158,11,0.15);">
+      <div class="card-icon">📘</div>
+      <div class="card-name">Job Description Manual</div>
+      <div class="card-desc">Search MYEDEN and Happy Dino roles, career paths, responsibilities and KPIs.</div>
+      <div class="card-arrow" style="color:#f59e0b;">Open Manual →</div>
     </a>
   </div>
 

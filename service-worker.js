@@ -15,3 +15,5 @@ self.addEventListener('activate', function(event){
 self.addEventListener('fetch', function(event){
   event.respondWith(fetch(event.request));
 });
+
+// JD Manual integration v1.0: jd-manual.html intentionally follows existing network-first/no-sensitive-cache behaviour.
