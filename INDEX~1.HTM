@@ -110,14 +110,15 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
 
 <!-- ACTION BAR — sits OUTSIDE the form entirely, sticky at top, never affects form layout -->
 <div class="action-bar">
-  <button class="btn-action" onclick="window.location.href='dashboard.html'" style="background:#fff;color:#1565c0;border:1px solid #b9cbea">Dashboard</button>
   <button class="btn-action btn-draft" id="btnSaveDraft" onclick="saveDraftServer()">&#128190; Save Draft</button>
   <button class="btn-action btn-load" id="btnResumeDraft" onclick="openResumeModal()">&#128194; Resume Draft</button>
   <input type="file" id="jsonFileInput" accept=".json,application/json" style="display:none" onchange="handleJsonFileLoad(event)">
   <button class="btn-action" onclick="document.getElementById('jsonFileInput').click()" style="background:#546e7a;color:#fff">&#128194; Load from JSON</button>
   <button class="btn-action" onclick="downloadJsonBackup()" style="background:#546e7a;color:#fff">&#128190; Download JSON</button>
   <button class="btn-action" id="btnSubmit" onclick="submitApplication()" style="background:#1b5e20;color:#fff">&#128228; Submit Application</button>
-  <span class="autosave-status" id="autosaveStatus" style="margin-left:auto">Auto-save: waiting...</span>
+  <span style="margin-left:auto"></span>
+  <button class="btn-action" id="btnDashboard" type="button" onclick="window.location.href='dashboard.html'" style="background:#fff;color:#1565c0;border:1px solid #b9cbea" title="Return to Dashboard">Dashboard</button>
+  <span class="autosave-status" id="autosaveStatus">Auto-save: waiting...</span>
 </div>
 
 <div class="form-wrap" id="appForm">
@@ -503,7 +504,7 @@ td input,td select{border:none;width:100%;font-size:12px;background:transparent;
 <script>
 
 // ── VERSION (update only via UVN command) ──────────────────────────────────
-var FORM_VERSION = 'MEG-EAF-Applicant v2026.08.27-00:00';
+var FORM_VERSION = 'MEG-EAF-Applicant v2026.08.28-10:00';
 
 
 // ── CONFIG (Supabase backend) ────────────────────────────────────────────────
